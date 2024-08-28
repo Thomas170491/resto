@@ -1,0 +1,28 @@
+<!-- Buttons or links to select a category -->
+<ul *ngIf="!selectedCategoryId; else categorySelected">
+    <li *ngFor="let category of categories |async">
+      <button (click)="selectedCategoryId = category.uuid">
+        {{ category.title }}
+      </button>
+    </li>
+  </ul>
+  
+  <!-- Template to show when a category is selected -->
+  <ng-template #categorySelected>
+    <button (click)="selectedCategoryId = ''">Return</button>
+  
+    <!-- Filtered list of categories based on selectedCategoryId -->
+    <ul *ngIf="categories| async as CategoryData ">
+      <li *ngFor="let category of CategoryData | filterByCategory:selectedCategoryId">
+        <h2>{{ category.title }}</h2>
+        <ul>
+          <li *ngFor="let recipe of category.recipes" (click) = "addToForm(recipe.uuid,recipe.price)">
+            <h3>{{ recipe.title }}</h3>
+            <p>{{ recipe.description }}</p>
+            <span>{{ recipe.price }}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </ng-template>
+  
