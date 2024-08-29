@@ -1,14 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { ApiService } from '../../api.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RestoCategorie } from '../../interfaces';
+import { NgFor, UpperCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-menu-categories',
   standalone: true,
-  imports: [],
+  imports: [UpperCasePipe, NgFor],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
-export class MenuComponent {
-  @Input() public categories! :RestoCategorie[];
+export class MenuCategoriesComponent {
+  @Input() categories!: RestoCategorie[];
+  @Output() selectedEvent: EventEmitter<string> = new EventEmitter();
 }

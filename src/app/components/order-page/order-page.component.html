@@ -16,10 +16,12 @@
       <li *ngFor="let category of CategoryData | filterByCategory:selectedCategoryId">
         <h2>{{ category.title }}</h2>
         <ul>
-          <li *ngFor="let recipe of category.recipes" (click) = "addToForm(recipe.uuid,recipe.price)">
+          <li *ngFor="let recipe of category.recipes" >
             <h3>{{ recipe.title }}</h3>
             <p>{{ recipe.description }}</p>
             <span>{{ recipe.price }}</span>
+            <button (click) = "addToForm(recipe.uuid,recipe.price)">add</button >
+            <button (click) = "removeFromForm(recipe.uuid,recipe.price)">remove</button>
           </li>
         </ul>
       </li>
