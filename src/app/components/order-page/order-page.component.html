@@ -1,11 +1,7 @@
 <!-- Buttons or links to select a category -->
-<ul *ngIf="!selectedCategoryId; else categorySelected">
-    <li *ngFor="let category of categories |async">
-      <button (click)="selectedCategoryId = category.uuid">
-        {{ category.title }}
-      </button>
-    </li>
-  </ul>
+<div *ngIf="!selectedCategoryId; else categorySelected">
+  <app-menu-categories (selectedEvent)="selectedCategoryId = $event" *ngIf="categories |async as categoriesData" [categories]="categoriesData"></app-menu-categories>
+</div>
   
   <!-- Template to show when a category is selected -->
   <ng-template #categorySelected>

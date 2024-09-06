@@ -4,12 +4,13 @@ import { RestoCategorie } from '../../interfaces';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { FilterByCategoryPipe } from '../../Pipes/FilterBycategory/filter-by-category.pipe';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MenuCategoriesComponent } from '../menu/menu.component';
 
 
 @Component({
   selector: 'app-order-page',
   standalone: true,
-  imports: [NgFor, FilterByCategoryPipe, NgIf,AsyncPipe],
+  imports: [NgFor, FilterByCategoryPipe, NgIf,AsyncPipe, MenuCategoriesComponent],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss'
 })
