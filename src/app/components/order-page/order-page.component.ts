@@ -1,16 +1,48 @@
-import { Component ,OnInit,} from '@angular/core';
+import { Component} from '@angular/core';
 import { ApiService } from '../../api.service';
-import { RestoCategorie } from '../../interfaces';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { FilterByCategoryPipe } from '../../Pipes/FilterBycategory/filter-by-category.pipe';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuCategoriesComponent } from '../menu/menu.component';
+import { IonButton, IonCard, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToolbar, IonCardHeader, IonCardContent, IonCardTitle, IonAvatar } from '@ionic/angular/standalone';
 
+;
+
+
+
+
+
+const Imports = [
+   NgFor, 
+   FilterByCategoryPipe,
+   NgIf,
+   AsyncPipe, 
+   MenuCategoriesComponent,
+   IonContent,
+   IonGrid,
+   IonRow,
+   IonList,
+   IonListHeader,
+   IonItem,
+   IonLabel,
+   IonFooter,
+   IonToolbar,
+   IonButton,
+   IonCol,
+   IonButtons,
+   IonCard,
+   IonCardHeader,
+   IonCardContent,
+   IonCardTitle,
+   IonAvatar
+   
+   
+  ];
 
 @Component({
   selector: 'app-order-page',
   standalone: true,
-  imports: [NgFor, FilterByCategoryPipe, NgIf,AsyncPipe, MenuCategoriesComponent],
+  imports: [...Imports],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss'
 })

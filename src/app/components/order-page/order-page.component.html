@@ -1,26 +1,55 @@
-<!-- Buttons or links to select a category -->
-<div *ngIf="!selectedCategoryId; else categorySelected">
-  <app-menu-categories (selectedEvent)="selectedCategoryId = $event" *ngIf="categories |async as categoriesData" [categories]="categoriesData"></app-menu-categories>
-</div>
-  
-  <!-- Template to show when a category is selected -->
-  <ng-template #categorySelected>
-    <button (click)="selectedCategoryId = ''">Return</button>
-  
-    <!-- Filtered list of categories based on selectedCategoryId -->
-    <ul *ngIf="categories| async as CategoryData ">
-      <li *ngFor="let category of CategoryData | filterByCategory:selectedCategoryId">
-        <h2>{{ category.title }}</h2>
-        <ul>
-          <li *ngFor="let recipe of category.recipes" >
-            <h3>{{ recipe.title }}</h3>
-            <p>{{ recipe.description }}</p>
-            <span>{{ recipe.price }}</span>
-            <button (click) = "addToForm(recipe.uuid,recipe.price)">add</button >
-            <button (click) = "removeFromForm(recipe.uuid,recipe.price)">remove</button>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </ng-template>
-  
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <!-- Left column: list of category names -->
+      <ion-col size="3">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Categories</ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let category of categories | async as categoriesData" (click)="selectedCategoryId = category.uuid">
+            <ion-label>{{ category.title }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <!-- Right column: list of recipes grouped by categories -->
+      <ion-col size="9">
+        <ion-list *ngIf="categories | async as CategoryData">
+          <ion-item *ngFor="let category of CategoryData | filterByCategory:selectedCategoryId">
+            <ion-label>
+              <h2>{{ category.title }}</h2>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3" *ngFor="let recipe of category.recipes">
+                    <ion-item>
+                      <ion-avatar slot="start">
+                        <img src="{{ recipe.imageUrl }}" alt="{{ recipe.title }}">
+                      </ion-avatar>
+                      <ion-label>
+                        <h3>{{ recipe.title }}</h3>
+                      </ion-label>
+                    </ion-item>
+                    <ion-card>
+                      <ion-card-content>
+                        <p>{{ recipe.description }}</p>
+                        <span>{{ recipe.price }}</span>
+                        <ion-buttons slot="end">
+                          <ion-button (click)="addToForm(recipe.uuid, recipe.price)">Add</ion-button>
+                          <ion-button (click)="removeFromForm(recipe.uuid, recipe.price)">Remove</ion-button>
+                        </ion-buttons>
+                      </ion-card-content>
+               
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-footer>
+          <ion-button style="width: 100%;" (click)="sendOrder()">Order</ion-button>
+        </ion-footer>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
