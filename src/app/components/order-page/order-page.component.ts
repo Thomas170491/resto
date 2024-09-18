@@ -53,7 +53,8 @@ export class OrderPageComponent {
   categories = new ApiService().getRecipes();
   selectedCategoryId : string =''; 
   orderForm = new FormArray([] as any, Validators.compose([
-    Validators.minLength(2)
+    Validators.minLength(2),
+    Validators.required
   ]));
   constructor() {
     addIcons({
