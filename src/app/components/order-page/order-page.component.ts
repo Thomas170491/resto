@@ -1,23 +1,16 @@
 import { Component} from '@angular/core';
 import { ApiService } from '../../api.service';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { FilterByCategoryPipe } from '../../Pipes/FilterBycategory/filter-by-category.pipe';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuCategoriesComponent } from '../menu/menu.component';
-import { IonButton, IonCard, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToolbar, IonCardHeader, IonCardContent, IonCardTitle, IonAvatar } from '@ionic/angular/standalone';
-
-;
-
-
-
+import { IonButton, IonCard,IonMenu, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToolbar, IonCardHeader, IonCardContent, IonCardTitle, IonAvatar, IonSplitPane, IonMenuButton, IonNote, IonIcon } from '@ionic/angular/standalone';
+import {addCircleOutline, removeCircleOutline} from 'ionicons/icons'
+import { addIcons } from 'ionicons';
+import { DividPipe } from '../../pipes/divid/divid.pipe';
 
 
-const Imports = [
-   NgFor, 
-   FilterByCategoryPipe,
-   NgIf,
-   AsyncPipe, 
-   MenuCategoriesComponent,
+const UIElements = [
    IonContent,
    IonGrid,
    IonRow,
@@ -34,15 +27,24 @@ const Imports = [
    IonCardHeader,
    IonCardContent,
    IonCardTitle,
-   IonAvatar
-   
-   
+   IonAvatar,
+   IonSplitPane,
+   IonMenu,
+   IonNote,
+   IonIcon,
   ];
+
+  const PIPES = [
+    FilterByCategoryPipe,
+    CurrencyPipe,
+    AsyncPipe,
+    DividPipe
+  ]
 
 @Component({
   selector: 'app-order-page',
   standalone: true,
-  imports: [...Imports],
+  imports: [...UIElements,...PIPES,NgFor, NgIf, MenuCategoriesComponent],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss'
 })
@@ -53,6 +55,12 @@ export class OrderPageComponent {
   orderForm = new FormArray([] as any, Validators.compose([
     Validators.minLength(2)
   ]));
+  constructor() {
+    addIcons({
+      addCircleOutline,
+      removeCircleOutline
+    })
+  }
 
 
  

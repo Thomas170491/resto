@@ -1,55 +1,46 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <!-- Left column: list of category names -->
-      <ion-col size="3">
-        <ion-list>
-          <ion-list-header>
-            <ion-label>Categories</ion-label>
-          </ion-list-header>
-          <ion-item *ngFor="let category of categories | async as categoriesData" (click)="selectedCategoryId = category.uuid">
-            <ion-label>{{ category.title }}</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-      <!-- Right column: list of recipes grouped by categories -->
-      <ion-col size="9">
-        <ion-list *ngIf="categories | async as CategoryData">
-          <ion-item *ngFor="let category of CategoryData | filterByCategory:selectedCategoryId">
-            <ion-label>
-              <h2>{{ category.title }}</h2>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="3" *ngFor="let recipe of category.recipes">
-                    <ion-item>
-                      <ion-avatar slot="start">
-                        <img src="{{ recipe.imageUrl }}" alt="{{ recipe.title }}">
-                      </ion-avatar>
-                      <ion-label>
-                        <h3>{{ recipe.title }}</h3>
-                      </ion-label>
-                    </ion-item>
-                    <ion-card>
-                      <ion-card-content>
-                        <p>{{ recipe.description }}</p>
-                        <span>{{ recipe.price }}</span>
-                        <ion-buttons slot="end">
-                          <ion-button (click)="addToForm(recipe.uuid, recipe.price)">Add</ion-button>
-                          <ion-button (click)="removeFromForm(recipe.uuid, recipe.price)">Remove</ion-button>
-                        </ion-buttons>
-                      </ion-card-content>
+<ion-split-pane when="xs" contentId="main">
+  <ion-menu contentId="main">
+    <ion-content class="ion-no-padding">
+      <app-menu-categories [categories]="(categories | async) ?? []" (selectedEvent)="selectedCategoryId = $event"></app-menu-categories>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main">
+    <ion-content class="ion-no-padding">
+      <ion-grid>
+        <ion-row *ngFor="let category of (categories | async) | filterByCategory: selectedCategoryId">
+          <ion-col size="3" *ngFor="let recipe of category.recipes">
+            <ion-card class="ion-text-center">
+              <ion-card-header>
+                <ion-avatar>
+                  <img [src]="recipe.imageUrl || 'https://placehold.co/600x400?text='+recipe.title[0]" />
+                </ion-avatar>
+                <ion-card-title class="ion-padding-top">
+                  {{ recipe.title }}
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+ 
+                <ion-note>{{ recipe.price |divid : 100 |currency: 'CHF' : 'symbol':'1.2'}}</ion-note>
                
-                    </ion-card>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <ion-footer>
-          <ion-button style="width: 100%;" (click)="sendOrder()">Order</ion-button>
-        </ion-footer>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+                  <ion-button color="success" fill="clear"  (click)="addToForm(recipe.uuid, recipe.price)">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button color="danger" fill="clear" (click)="removeFromForm(recipe.uuid, recipe.price)">
+                    <ion-icon name="remove-circle-outline"></ion-icon>
+                  </ion-button>
+                
+
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button [disabled]="!orderForm.valid" color="success" expand="full">CHECKOUT</ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
+</ion-split-pane>

@@ -1,5 +1,24 @@
 :host {
-    ion-content, ion-grid, ion-row, ion-col {
-      height: 100%;
+  ion-avatar {
+    margin : auto;
+     
+  }
+  
+  ion-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    
+    ion-card-title {
+      font-size: 1rem;
     }
   }
+  ion-note{
+    display: block;
+  }
+}
+  

@@ -1,7 +1,11 @@
-<ul>
-    <li *ngFor="let category of categories">
-      <button (click)="selectedEvent.emit(category.uuid)">
-        {{ category.title }}
-      </button>
-    </li>
-  </ul>
+<ion-list lines="full" class="ion-no-padding">
+    <ion-item
+    button="true"
+    *ngFor="let category of categories" 
+    (click)="selectedEvent.emit(category.uuid)"
+    class= "ion-text-center">
+    <ion-label>
+        {{ category.title | uppercase }}
+      </ion-label>
+    </ion-item>
+</ion-list>
