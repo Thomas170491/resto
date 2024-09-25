@@ -56,5 +56,15 @@ export class  ApiService{
         }
   
             
+        async sendOrder(order: any) : Promise<void> {
+          try{
+            const orderCollection = collection(this.firestore, 'orders');
+            await addDoc(orderCollection, order);
+           
+          }
+          catch(error){
+            console.error('error sending order', error);
+ 
+        }
       }
-
+    }

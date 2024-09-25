@@ -72,6 +72,14 @@ export class OrderPageComponent {
  
 
    sendOrder = async () => {
+    console.log(this.orderForm.value);
+    const order = this.orderForm.value;
+    try {
+     await this.apiService.sendOrder(order);
+      console.log('order sent');
+    } catch (error) {
+      console.error('error sending order', error);
+    }
 
   }
 
