@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api/apiservice.service';
 import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { FilterByCategoryPipe } from '../../Pipes/FilterBycategory/filter-by-category.pipe';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +8,8 @@ import { IonButton, IonCard,IonMenu, IonButtons, IonCol, IonContent, IonFooter, 
 import {addCircleOutline, removeCircleOutline} from 'ionicons/icons'
 import { addIcons } from 'ionicons';
 import { DividPipe } from '../../pipes/divid/divid.pipe';
+import { RestoCategorie } from '../../interfaces';
+import { Observable } from 'rxjs';
 
 
 const UIElements = [
@@ -50,17 +52,20 @@ const UIElements = [
 })
 export class OrderPageComponent {
   title = 'resto'
-  categories = new ApiService().getRecipes();
+  categories! : Observable<RestoCategorie[]>;
   selectedCategoryId : string =''; 
   orderForm = new FormArray([] as any, Validators.compose([
     Validators.minLength(2),
     Validators.required
   ]));
-  constructor() {
+  constructor(private readonly apiService: ApiService) {
     addIcons({
       addCircleOutline,
       removeCircleOutline
-    })
+    });
+    this.categories = this.apiService.getRecipes()
+   
+    ;
   }
 
 
