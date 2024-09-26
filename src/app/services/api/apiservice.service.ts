@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RestoCategorie, APIResponse } from '../../interfaces';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import {  map, Observable } from 'rxjs';
 import { collection, Firestore, addDoc } from '@angular/fire/firestore';
 
 
