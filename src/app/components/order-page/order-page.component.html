@@ -39,7 +39,14 @@
     </ion-content>
     <ion-footer>
       <ion-toolbar>
-        <ion-button [disabled]="!orderForm.valid" color="success" expand="full">CHECKOUT</ion-button>
+              <ion-button
+                  [disabled]="!orderForm.valid"
+                  color="success"
+                  expand="full"
+                  (click)="sendOrder()"
+                >
+                  CHECKOUT
+        </ion-button>
       </ion-toolbar>
     </ion-footer>
   </div>
